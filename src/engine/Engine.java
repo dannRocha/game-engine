@@ -5,6 +5,7 @@ public class Engine implements Runnable
 {
     private Thread thread;
     private Window window;
+    private Renderer renderer;
     
     // ENGINE
     private boolean running = false;
@@ -12,7 +13,7 @@ public class Engine implements Runnable
 
     // WINDOW
     private int width, height;
-    private float scale = 2f;
+    private float scale = 1f;
     private String title = "Core v0.0.1";
 
     public Engine()
@@ -22,11 +23,33 @@ public class Engine implements Runnable
     }
 
 
+    public Engine( String title )
+    {
+        this.title = title;
+    }
+
+
+    public Engine( int width, int height )
+    {
+        this.width = width;
+        this.height = height;
+    }
+
+
+    public Engine( String title, int width, int height )
+    {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+    }
+
+
     public void start(){
 
-        window = new Window(this);
+        window = new Window( this );
+        renderer = new Renderer( this );
 
-        thread = new Thread(this);
+        thread = new Thread( this );
         thread.run();
     }
 
@@ -80,6 +103,7 @@ public class Engine implements Runnable
             {
 
                 // TODO : render Game
+                renderer.clear();
                 window.update();
                 frames++;
 
@@ -101,13 +125,15 @@ public class Engine implements Runnable
     
     public int getWidth(){ return this.width; }
     public int getHeight(){ return  this.height; }
-    public float getScale() { return this.scale; }
+    public float getScale(){ return this.scale; }
     public String getTitle(){ return this.title; }
+    public Window getWindow(){ return this.window; }
 
     public void setWidth( int width ){ this.width = width; }
     public void setHeight( int height ){ this.height = height; }
-    public void setScale( float scale ) { this.scale = scale; }
+    public void setScale( float scale ){ this.scale = scale; }
     public void setTitle( String title ){ this.title = title; }
-
+    public void setWindow(Window window ){ this.window = window; }
+    
     public void dispose(){}
 }

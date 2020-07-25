@@ -20,19 +20,19 @@ public class Window
     private BufferStrategy bs;
     
 
-    public Window(Engine Engine)
+    public Window(Engine container)
     {
         image = new BufferedImage(
-            Engine.getWidth(),
-            Engine.getHeight(),
+            container.getWidth(),
+            container.getHeight(),
             BufferedImage.TYPE_INT_RGB 
         );
 
         canvas = new Canvas();
 
         Dimension s = new Dimension(
-           ( int )( Engine.getWidth() * Engine.getScale() ), 
-           ( int )( Engine.getHeight() * Engine.getScale() )
+           ( int )( container.getWidth() * container.getScale() ), 
+           ( int )( container.getHeight() * container.getScale() )
         );
 
         canvas.setPreferredSize(s);
@@ -40,7 +40,7 @@ public class Window
         canvas.setMinimumSize(s);
 
 
-        frame = new JFrame(Engine.getTitle());
+        frame = new JFrame(container.getTitle());
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.setLayout( new BorderLayout() );
         frame.add(canvas, BorderLayout.CENTER);
@@ -64,4 +64,9 @@ public class Window
         
         bs.show();
     }
+
+    public Canvas getCanvas(){ return this.canvas; }
+    public BufferedImage getImage(){ return this.image; } 
+
+    public void setCanvas( Canvas canvas ){ this.canvas = canvas; }
 }
